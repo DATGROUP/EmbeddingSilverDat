@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Signature Generator</title>
+    <link media="all" href="../common/style/style.css" rel="stylesheet" type="text/css" />
+	<!-- https://github.com/h2non/jshashes -->
+    <script type="text/javascript" src="hashes.min.js"></script>
+	
+	<script type="text/javascript" src="../common/js/datUtils.js"></script>
+	<script type="text/javascript" src="datSignatureApp.js"></script>
+	
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  </head>
+  
+  <body>
+
+    <div id="datDialogs" style="display:inline">
+    
+      <div id="overlay"></div>
+      
+	  <!-- TODO Add tabs... 
+
+	  -->
+	  
+	  <div class="datDialog" id="datAuthenticationDialog" style="display:inline">
+        <div class="datTabHeader">
+          <ul>
+            <li id="datInformationHeader" class="datTabSelected" onclick="de.dat.external.utils.showTab('datInformation')">Information</li>
+            <li id="datHashHeader" onclick="de.dat.external.utils.showTab('datHash')">Hash</li>
+            <li id="datExpiringHashHeader" onclick="de.dat.external.utils.showTab('datExpiringHash')">Expirning Hashes</li>
+          </ul>
+        </div>
+		
+		<div class="datTabContent">
+		  <div id="datInformationTab" style="display:inline">
+		    <h2>Introduction</h2>
+			<p>
+	          Signature are used to keep your password a secret.
+              <br />
+              The name signature is due to historic reasons. They used to be AES or PGP Signatures.
+              But creating such a signature is not straight forward. Thus we decided to move to hashes, which
+              makes the whole handling way easier while maintaining the same level of security.
+            </p>
+            <p>
+              Hashes are a wide spread standard and something like a the swiss army knife.
+              They are easy and fast, as well as there are tons of libraries and implementation
+              freely available.
+            </p>
+            <p>
+              But we are currently in the process switching from Signatures to Hashes. Which means not
+              all products may are already transitioned. Currently only MD5 hashes are supported.	  		  
+			</p>		  
+	      </div>
+		  
+		  <div id="datHashTab">
+              <h2>Hash/Signature Generator</h2>
+              <div><label>Customer Number</label> <input id="datCustomer" maxlength="7" onkeyup="de.dat.signature.app.updateHashes()"/></div>
+              <div><label>User name</label> <input id="datUsername" onkeyup="de.dat.signature.app.updateHashes()"/></div>
+              <div><label>Password</label> <input id="datPassword" type="password" onkeyup="de.dat.signature.app.updateHashes()"/></div>
+              <br/>
+		    
+		      <h2>Permanent Hashes</h2>
+		      <p>Permanent Hashes are valid at any time, they do not expire</p>
+		      <div id="datSha256Key"></div>
+		      <div id="datMd5Key"></div>
+		  
+		  </div>
+		  
+		  <div id="datExpiringHashTab">
+		    <h2>Expirning Hashes</h2>
+		    <p>Expirning Hashes are only valid within a fixed interval/window. They are a permanent hash which is extended by a exprining time window</p>
+		    <p>The base for such an expiring window is a GMT Timestamp in Epoch. But instead
+		       of miliseconds we use a 10 minute aligment. This means if the timestamp is e.g. 1433766110060 
+		       the corresponding frame would be 2389610.
+		    <p>
+		    <div><label>Timeframe</label> <input id="datTimeframe" onkeyup="de.dat.signature.app.updateHashes()"/><button onClick="de.dat.signature.app.updateTimeStamp()">Update</button></div>
+		    <p>Append such a frame to your signature before calculating the checksum. This ensures you key will be only valid in the very same 
+		       frame, the previous one as well as the next one. Which means the timestpan is at worst case 10 Minutes and at best case 30 Minute.
+		    </p>
+		    <div id="datSha256TimedKey"></div>
+		    <div id="datMd5TimedKey"></div>				  
+		  </div>
+	    </div>		
+		                <div class="datFooter">
+                    <button onclick="de.dat.external.utils.hideDialogs()">Close</button>
+                </div>
+      </div>
+    </div>      
+  </body>
+</html>
+
+
