@@ -1,6 +1,6 @@
 # EmbeddingSilverDat
 
-In order to run the demos just clone the repository. All demos can be opened directly in the webbrowser.
+In order to run the demos just clone the repository or [download it as zip](https://github.com/DATGROUP/EmbeddingSilverDat/archive/master.zip). 
 
 ## Embedding Applications
 
@@ -8,7 +8,7 @@ Demonstrates how to embed a SilverDat application into a web application.
 
 Just open  /embedding/embedding.html in your browser. Then choose the application you want to test, set your credentials and click on the add/update button.
 
-Please note the code generator works only if it is run from a webserver.  
+Please note the code generator works only if it is run from a true webserver.
 
 ## Signatures
 
