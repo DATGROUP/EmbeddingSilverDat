@@ -20,184 +20,216 @@ if (!de.dat.external.utils)
   PropertyUtils.prototype = {
   
     getIntProperty: function(id) {
-      var elm = document.getElementById(id);		
+      var elm = document.getElementById(id);        
       var id = parseInt(elm.value, 10);
-		
-	  if (isNaN(id))
+        
+      if (isNaN(id))
         return null;
-		  
-	  return id;
+          
+      return id;
     },
-	  
+      
     getBooleanProperty: function(id) {
       var elm = document.getElementById(id);
-	  return elm.checked;		
+      return elm.checked;        
     },
-	  
+      
     getStringProperty: function(id) {
-      var elm = document.getElementById(id);				
-	  
-	  if (!elm)
-	    throw "Element "+id+" not found";
-	  
-      var str = elm.value;
-				
-	  if (str == null)
-        return null;
-		   
-      if (str.trim() == "")
-        return null;
-		   
-	  return str;
-    },	
-	
-    setStringProperty: function(id, str) {
-      var elm = document.getElementById(id);				
-      elm.value = str;				
-    },	
-	
-	getStringPropertyByName: function(name, value) {	
-	  var items = document.getElementsByName(name);
-	  
-      for (var i = 0; i < items.length; i++)
-	    if (items[i].checked)
-		  return items[i].value;	
-		  
-	  if (typeof value === 'undefined')
-	    return null
-		
-	  return value;
-    },	
-		
-	toggle: function(element) {
-	    var el = document.getElementById(element);
-		if (!el)
-		  return;
-		
-        if ( el.style.display == "inline" )
-		  hide(el);
-		else
-		  show(el);
-	},
-
-	show: function(elm) {
-	
-	  if (typeof elm === 'string')
-	    elm = document.getElementById(elm);			
-		
-	  if (!elm)
-	    return;
-		  
-	  elm.style.display = "inline";
-	},
-	  
-	hide: function(elm, target) {
-	
-	  if (typeof elm === 'string')
-	    elm = document.getElementById(elm);	
-		
+      var elm = document.getElementById(id);                
+      
       if (!elm)
-	    return;
-		  
-	  if ((target) && (elm != target)) 		  
-	    return;
+        throw "Element "+id+" not found";
+      
+      var str = elm.value;
+                
+      if (str == null)
+        return null;
+           
+           
+      if (str.trim && (str.trim() == ""))
+        return null;
+           
+      return str;
+    },    
+    
+    setStringProperty: function(id, str) {
+      var elm = document.getElementById(id);                
+      elm.value = str;                
+    },    
+    
+    getStringPropertyByName: function(name, value) {    
+      var items = document.getElementsByName(name);
+      
+      for (var i = 0; i < items.length; i++)
+        if (items[i].checked)
+          return items[i].value;    
+          
+      if (typeof value === 'undefined')
+        return null
+        
+      return value;
+    },    
+        
+    toggle: function(element) {
+        var el = document.getElementById(element);
+        if (!el)
+          return;
+        
+        if ( el.style.display == "inline" )
+          hide(el);
+        else
+          show(el);
+    },
 
-	  elm.style.display = "none";
-	},
-	  
-	showDialog: function(id, init, tab) {
-	  this.show("datDialogs");
-	  this.show("overlay");
-	  this.show(id);
-	  
-	  var that = this;
-	  
+    show: function(elm) {
+    
+      if (typeof elm === 'string')
+        elm = document.getElementById(elm);            
+        
+      if (!elm)
+        return;
+          
+      elm.style.display = "inline";
+    },
+      
+    hide: function(elm, target) {
+    
+      if (typeof elm === 'string')
+        elm = document.getElementById(elm);    
+        
+      if (!elm)
+        return;
+          
+      if ((target) && (elm != target))           
+        return;
+
+      elm.style.display = "none";
+    },
+      
+    showDialog: function(id, init, tab) {
+      this.show("datDialogs");
+      this.show("overlay");
+      this.show(id);
+      
+      var that = this;
+      
       document.onkeydown = function(evt) {
         evt = evt || window.event;
         if (evt.keyCode != 27)
-		  return;
-		  
-		that.hideDialogs();
-      };	
+          return;
+          
+        that.hideDialogs();
+      };    
 
       if (typeof init == "function")
-        init();	  
-		
-	  if (tab)
-	    this.showTab(tab);
-	},
-	
-	setClass: function (elm, clazz) {
+        init();      
+        
+      if (tab)
+        this.showTab(tab);
+    },
+    
+    setClass: function (elm, clazz) {
       if (typeof elm === 'string')
-	    elm = document.getElementById(elm);	
-	  
-	  elm.className = clazz;
-	},
-	
-	addClass : function (elm, clazz) {
+        elm = document.getElementById(elm);    
+      
+      elm.className = clazz;
+    },
+    
+    addClass : function (elm, clazz) {
       if (typeof elm === 'string')
-	    elm = document.getElementById(elm);	
-	  
-	  elm.className += clazz;
-	},
-	
-	removeClass : function(elm, clazz) {
+        elm = document.getElementById(elm);    
+      
+      elm.className += clazz;
+    },
+    
+    removeClass : function(elm, clazz) {
       if (typeof elm === 'string')
-	    elm = document.getElementById(elm);	
-		
+        elm = document.getElementById(elm);    
+        
       var re = new RegExp("(?:^|\\s)"+clazz+"(?!\\S)", "g");
-	  elm.className = elm.className.replace( re , '' )		
-	},
-	
-	hasClass : function(elm, clazz) {
-	  if (typeof elm === 'string')
-	    elm = document.getElementById(elm);	
-		
-      var re = new RegExp("(?:^|\\s)"+clazz+"(?!\\S)");		
-	  return elm.className.match(re);
-	},
-	
-	showTab: function(id) {
+      elm.className = elm.className.replace( re , '' )        
+    },
+    
+    hasClass : function(elm, clazz) {
+      if (typeof elm === 'string')
+        elm = document.getElementById(elm);    
+        
+      var re = new RegExp("(?:^|\\s)"+clazz+"(?!\\S)");        
+      return elm.className.match(re);
+    },
+    
+    getElementsByClassName : function(elm, clazz) {
+      if (!elm)
+        return [];
+    
+      if (elm.getElementsByClassName)
+        return elm.getElementsByClassName("datTabSelected");
+        
+      var d = elm, elements, pattern, i, results = [];
+      if (d.querySelectorAll) { // IE8
+        return d.querySelectorAll("." + clazz);
+      }
+      
+      if (d.evaluate) { // IE6, IE7
+        pattern = ".//*[contains(concat(' ', @class, ' '), ' " + clazz + " ')]";
+        elements = d.evaluate(pattern, d, null, 0, null);
+        while ((i = elements.iterateNext()))
+          results.push(i);
 
-  	  var elm = document.getElementById(id+"Tab");	
-		
-	  this.hideChildren(elm.parentNode,id+"Tab");
-	  this.show(elm);		 
-	  
-	  elm = document.getElementById(id+"Header");
-	  if (!elm)
-	    return;
-		
-	  var items = elm.parentNode.getElementsByClassName("datTabSelected");
-	  
-	  for (var i = 0; i < items.length; i++)
-	    this.removeClass(items[i],"datTabSelected");
-		
-	  this.addClass(id+"Header", "datTabSelected");
-	},
-	
-	hideChildren : function(elm, keep) {
-	  if (!elm)
-	    return;
-	
-	  if (typeof elm === 'string')
-	    elm = document.getElementById(elm);		
-	  
-	  if (!elm)
-	    throw "Could not hide children, no parent element";
-	  
-	  var c = elm.children;
-		
-	  for (var i = 0; i < c.length; i++)
-	    if (keep != c[i].id)
-		  this.hide(c[i]);				  	
-	},
-	  
-	hideDialogs : function() {
-	  this.hideChildren("datDialogs");
-	  this.hide("datDialogs");	  
-	},	
-	
+        return results;  
+      }
+
+      elements = d.getElementsByTagName("*");
+      pattern = new RegExp("(^|\\s)" + clazz + "(\\s|$)");
+      for (i = 0; i < elements.length; i++)
+        if (pattern.test(elements[i].className))
+          results.push(elements[i]);
+          
+      return results;
+    },
+    
+    showTab: function(id) {
+
+        var elm = document.getElementById(id+"Tab");    
+        
+      this.hideChildren(elm.parentNode,id+"Tab");
+      this.show(elm);         
+      
+      elm = document.getElementById(id+"Header");
+      if (!elm)
+        return;
+        
+      var items = this.getElementsByClassName(elm.parentNode, "datTabSelected")
+      //var items = elm.parentNode.getElementsByClassName("datTabSelected");
+      
+      for (var i = 0; i < items.length; i++)
+        this.removeClass(items[i],"datTabSelected");
+        
+      this.addClass(id+"Header", "datTabSelected");
+    },
+    
+    hideChildren : function(elm, keep) {
+      if (!elm)
+        return;
+    
+      if (typeof elm === 'string')
+        elm = document.getElementById(elm);        
+      
+      if (!elm)
+        throw "Could not hide children, no parent element";
+      
+      var c = elm.children;
+        
+      for (var i = 0; i < c.length; i++)
+        if (keep != c[i].id)
+          this.hide(c[i]);                      
+    },
+      
+    hideDialogs : function() {
+      this.hideChildren("datDialogs");
+      this.hide("datDialogs");      
+    },    
+    
     addEvent : function (element, eventName, fn) {
       if (element.addEventListener)
         element.addEventListener(eventName, fn, false);
@@ -205,16 +237,16 @@ if (!de.dat.external.utils)
         element.attachEvent('on' + eventName, fn);
     },
 
-	removeChildren : function(elm) {
-	  if (!elm)
-	    return;
-		
-	  if (typeof elm === 'string')
-	    elm = document.getElementById(elm);	
-	
+    removeChildren : function(elm) {
+      if (!elm)
+        return;
+        
+      if (typeof elm === 'string')
+        elm = document.getElementById(elm);    
+    
       while (elm.hasChildNodes())
-        elm.removeChild(elm.lastChild);	
-	}
+        elm.removeChild(elm.lastChild);    
+    }
   }
  
   // Export the object into the public namespace.

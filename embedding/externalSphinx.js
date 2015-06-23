@@ -424,7 +424,17 @@ var SphinxClass = ( function(){
 		
 			return JSON.stringify( params );
 		};
-
+        
+        Sphinx.prototype.invalidate = function() {
+            if (!this.session)
+                return;
+           
+			var xmlhttp = this.getXMLHttpRequest();
+			xmlhttp.open("POST", this.host + "/sessionKill", true);
+            
+            xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+            xmlhttp.send("sessionId=" + this.session);
+        };
 		/** navigates to the target set before */
 		Sphinx.prototype.navigateToTarget = function () {
 			var scrs = sphinx.getElementsByStyleClass( 'SphinxScript' );
@@ -475,6 +485,7 @@ var SphinxClass = ( function(){
 				}
 			}
 		};
+       
 		
 		return new function() {
 	        this.getInstance = function() {
