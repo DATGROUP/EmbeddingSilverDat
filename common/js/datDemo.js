@@ -62,6 +62,8 @@ if (!de.dat.external.utils)
     },	  
 	  	  
 	remove : function() {
+      //sphinx.invalidate();
+    
 	  if (!document.getElementById( sphinx.iFrameId ))
 	    return;
 
