@@ -38,4 +38,15 @@
   // Show DAT Internal Developments Servers. 
   //helper.show("datHostDeveloper");
   
+  try {
+  
+    // an ugly hack. IE's External is a very strange html object. It is always non null but we can
+    // not enumerate the properties. So we rely upon a dirty hack. In case the external object is linked
+    // with ScriptingObject there has to be a toString method otherwise an exception will be thrown. 
+    if ((navigator.userAgent.indexOf("MSIE") !== -1 || navigator.appVersion.indexOf('Trident/') !== -1))
+      if (window.external.toString())
+        helper.setBooleanProperty("datDotNetCallback", true);
+  }catch (e) {  
+  }
+  
 }());  

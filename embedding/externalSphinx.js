@@ -261,12 +261,16 @@ var SphinxClass = ( function(){
 			var parser = document.createElement('a');
 			parser.href = sphinx.host;
 					    
-			var origin = this._getOrigin(parser);			
-						
-			// Check for cross site scripting attacs, yes we have to do this...
-		    if (msg.origin !== origin) {
+			var origin = this._getOrigin(parser);
+
+            var parser2 = document.createElement('a'); 
+            parser2.href = msg.origin;
+            
+            // Check for cross site scripting attacs, yes we have to do this...
+            if ((parser.protocol != parser2.protocol) || (parser.hostname !== parser2.hostname)) {
+            
 			  if ( sphinx.onError )
-			    sphinx.onError("Cross Site Scripting fault");
+			    sphinx.onError("Cross Site Scripting fault "+parser.protocol+" "+parser2.protocol +" | "+parser.hostname +" "+ parser2.hostname);
 			
 			  return;
 			}
@@ -354,7 +358,7 @@ var SphinxClass = ( function(){
 				}
 				sphinx.generateIframe( sphinx.page, params );
 			} else if ( sphinx.onError ){
-				sphinx.onError( sphinx.error ? sphinx.error : "Anmeldung nicht erfolgreich. Bitte überprüfen Sie Ihre Eingabe." );
+				sphinx.onError( sphinx.error ? sphinx.error : "Anmeldung nicht erfolgreich. Bitte Ã¼berprÃ¼fen Sie Ihre Eingabe." );
 			}
 		};
 
@@ -435,6 +439,7 @@ var SphinxClass = ( function(){
             xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
             xmlhttp.send("sessionId=" + this.session);
         };
+
 		/** navigates to the target set before */
 		Sphinx.prototype.navigateToTarget = function () {
 			var scrs = sphinx.getElementsByStyleClass( 'SphinxScript' );
@@ -485,7 +490,6 @@ var SphinxClass = ( function(){
 				}
 			}
 		};
-       
 		
 		return new function() {
 	        this.getInstance = function() {

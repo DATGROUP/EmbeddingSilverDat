@@ -82,6 +82,46 @@ if (!de.dat.external.demo)
     
     return script.replace('this.helper.getBooleanProperty("'+id+'")', value);      
   },  
+  
+  DatCodeGen.prototype.generateHtml = function() {
+  
+    var utils = this.getUtils();
+    
+    var html = "";
+    html += '<!DOCTYPE html>\n';
+    html += '<html>\n';
+    html += '  <head>\n';
+    html += '    <meta http-equiv="X-UA-Compatible" content="IE=edge" >\n';
+    html += '\n';
+    html += '    <title>Client interface integration test (calculatePro)</title>\n';
+    html += '\n';
+    html += '    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />\n';
+    html += '    <meta http-equiv="cache-control" content="max-age=0"/>\n';
+    html += '    <meta http-equiv="cache-control" content="no-cache"/>\n';
+    html += '    <meta http-equiv="expires" content="0"/>\n';
+    html += '    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT"/>\n';
+    html += '    <meta http-equiv="pragma" content="no-cache"/>\n';
+    html += '\n';
+    html += '    <script type="text/javascript" src="lazyload.js"></script>\n';
+    html += '    <script type="text/javascript" src="externalSphinx.js"></script>\n';
+    html += '  </head>\n';
+    html += '\n';
+    html += '  <body>\n';
+    html += '    <div>\n';
+    html += '      <button onclick="'+utils.getStringProperty('datGenNamespace')+'.add()">Add/Update</button>\n';
+    html += '      <button onclick="'+utils.getStringProperty('datGenNamespace')+'.remove()">Remove</button>\n';
+    html += '    </div>\n';
+    html += '\n';
+    html += '    <div id="'+utils.getStringProperty('datContainerId')+'"></div>\n';
+    html += '  </body>\n';
+    html += '</html>\n';
+    
+    var elm = document.getElementById("datCodeGen");
+    if (elm) {
+      utils.show('datCodeGen');
+      elm.value = html;
+    }
+  },
     
   DatCodeGen.prototype.generateScript = function(script) {
   
@@ -118,19 +158,41 @@ if (!de.dat.external.demo)
     script = this.replaceStringProperty(script, "datCustomer");
     script = this.replaceStringProperty(script, "datUsername");
     script = this.replaceStringProperty(script, "datPassword");
+    script = this.replaceStringProperty(script, "datSignature");
       
     script = script.replace('this.helper.getIntProperty("datContractId")', ''+utils.getIntProperty("datContractId"));            
     script = this.replaceBooleanProperty(script, "datDisplayHeader");
     script = this.replaceBooleanProperty(script, "datReadyHandler");
     script = this.replaceStringProperty(script, "datReadyHandlerUrl", true);
     
+    script  = this.replaceStringProperty(script, "datLocaleCounty" ,true);
+    script  = this.replaceStringProperty(script, "datLocalLanguage", true);
+    script  = this.replaceStringProperty(script, "datCountryIndicator", true);
+    
+    // remove all reverences to our helper script...
+    script = script.replace(/helper : .*,/gmi,"");
+    script = script.replace(/^if\W*\(.*utils\)\W*throw\W*".*";/gmi,"");
+    
+    // Then cleanup the event handler...
+    if (this.getUtils().getBooleanProperty("datDotNetCallback")) {
+      script = script.replace(/\/\/ \{not:dotNetCallback:begin\}(.|[\r\n])*?\/\/ \{not:dotNetCallback:end\}/gmi,"");
+      script = script.replace(/\/\/ \{dotNetCallback:\w*\}/gmi,"");
+      script = script.replace(/^\W*if\W*\(.*getBooleanProperty\(\"datDotNetCallback\"\)\)/gmi,"");
+    }
+    else {
+      script = script.replace(/\/\/ \{not:dotNetCallback:\w*\}/gmi,"");
+      script = script.replace(/\/\/ \{dotNetCallback:begin\}(.|[\r\n])*?\/\/ \{dotNetCallback:end\}/gmi,"");
+      script = script.replace(/^\s*if\s*\(.*getBooleanProperty\("\w"\)\)/gmi,"");
+    }
+    
+    // Drop all comments...
+    script = script.replace(/\/\/  .*$/gmi,"");
+    
     var elm = document.getElementById("datCodeGen");
     if (elm) {
       utils.show('datCodeGen');
       elm.value = script;
     }
-    else
-      alert(script);
   };
     
   DatCodeGen.prototype.generate = function() {

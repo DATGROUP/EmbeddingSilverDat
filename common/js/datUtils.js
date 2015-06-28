@@ -33,6 +33,11 @@ if (!de.dat.external.utils)
       var elm = document.getElementById(id);
       return elm.checked;        
     },
+    
+    setBooleanProperty : function(id, value) {
+      var elm = document.getElementById(id);
+      elm.checked = value;
+    },
       
     getStringProperty: function(id) {
       var elm = document.getElementById(id);                
