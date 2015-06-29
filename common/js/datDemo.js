@@ -62,7 +62,7 @@ if (!de.dat.external.utils)
         
     remove : function() {
       // invalidate the session...
-      sphinx.invalidate();
+      //sphinx.invalidate();
     
       if (!document.getElementById( sphinx.iFrameId ))
         return;
@@ -101,7 +101,7 @@ if (!de.dat.external.utils)
       
       // {dotNetCallback:begin}
       if (this.helper.getBooleanProperty("datDotNetCallback"))
-        sphinx.onSuccess = function(object, xml) { that.onSuccessCallback(msg) };
+        sphinx.onSuccess = function(object, xml) { that.onSuccessCallback(object, xml) };
 
       if (this.helper.getBooleanProperty("datDotNetCallback"))
         sphinx.onError = function(msg) { that.onErrorCallback(msg) };
@@ -127,14 +127,14 @@ if (!de.dat.external.utils)
     
       if (!window.external)
         throw "No Scripting object found";
-    
-      return window.external.onSuccess();
+      
+      return window.external.onSuccess(window.location.hash);
     },
     
     onErrorCallback : function(msg) {
       if (!window.external)
         throw "No Scripting object found";
-        
+                
       return window.external.onError(msg);
     }
     // {dotNetCallback:end}
