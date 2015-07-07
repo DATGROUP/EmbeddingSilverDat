@@ -51,14 +51,14 @@ if (!de.dat.signature.app)
       var md5 = new Hashes.MD5();
       var sha256 = new Hashes.SHA256();
       
-      document.getElementById("datSha256Key").innerHTML  = "<b>"+sha256.hex(token).toUpperCase()+"</b>";
-      document.getElementById("datMd5Key").innerHTML  = "<b>"+md5.hex(token).toUpperCase()+"</b>";
+      document.getElementById("datSha256Key").value  = sha256.hex(token).toUpperCase();
+      document.getElementById("datMd5Key").value  = md5.hex(token).toUpperCase();
         
       var timeframe = utils.getStringProperty("datTimeframe");              
       token += ":"+timeframe;
 	  
-      document.getElementById("datSha256TimedKey").innerHTML  = "<b>"+sha256.hex(token).toUpperCase()+"</b>";
-      document.getElementById("datMd5TimedKey").innerHTML  = "<b>"+md5.hex(token).toUpperCase()+"</b>";
+      document.getElementById("datSha256TimedKey").value  = sha256.hex(token).toUpperCase();
+      document.getElementById("datMd5TimedKey").value  = md5.hex(token).toUpperCase();
     },
       
     getUtils : function() {

@@ -196,7 +196,7 @@ if (!de.dat.external.demo)
   };
     
   DatCodeGen.prototype.generate = function() {
-    this.getScript("../common/js/datDemo.js");    
+    this.getScript("datDemo.js");    
   };
   
   DatCodeGen.prototype.getUtils = function() {

@@ -182,4 +182,9 @@
 #datSoapUrls a {
   padding-left : 20px;
 }
+
+.datExampleBox {
+  white-space: pre; 
+  word-wrap: normal;
+}
   

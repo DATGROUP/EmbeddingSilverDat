@@ -4,13 +4,13 @@
   <head>
     <title>Signature Generator</title>
     <link media="all" href="../common/style/style.css" rel="stylesheet" type="text/css" />
-	<!-- https://github.com/h2non/jshashes -->
+  <!-- https://github.com/h2non/jshashes -->
     <script type="text/javascript" src="hashes.min.js"></script>
-	
-	<script type="text/javascript" src="../common/js/datUtils.js"></script>
-	<script type="text/javascript" src="datSignatureApp.js"></script>
-	
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  
+  <script type="text/javascript" src="../common/js/datUtils.js"></script>
+  <script type="text/javascript" src="datSignatureApp.js"></script>
+  
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   </head>
   
   <body>
@@ -18,25 +18,22 @@
     <div id="datDialogs" style="display:inline">
     
       <div id="overlay"></div>
-      
-	  <!-- TODO Add tabs... 
-
-	  -->
-	  
-	  <div class="datDialog" id="datAuthenticationDialog" style="display:inline">
+          
+    <div class="datDialog" id="datAuthenticationDialog" style="display:inline">
         <div class="datTabHeader">
           <ul>
             <li id="datInformationHeader" class="datTabSelected" onclick="de.dat.external.utils.showTab('datInformation')">Information</li>
             <li id="datHashHeader" onclick="de.dat.external.utils.showTab('datHash')">Hash</li>
             <li id="datExpiringHashHeader" onclick="de.dat.external.utils.showTab('datExpiringHash')">Expirning Hashes</li>
+            <li id="datExamplesHeader" onclick="de.dat.external.utils.showTab('datExamples')">Examples</li>
           </ul>
         </div>
-		
-		<div class="datTabContent">
-		  <div id="datInformationTab" style="display:inline">
-		    <h2>Introduction</h2>
-			<p>
-	          Signature are used to keep your password a secret.
+    
+    <div class="datTabContent">
+      <div id="datInformationTab" style="display:inline">
+        <h2>Introduction</h2>
+      <p>
+            Signature are used to keep your password a secret.
               <br />
               The name signature is due to historic reasons. They used to be AES or PGP Signatures.
               But creating such a signature is not straight forward. Thus we decided to move to hashes, which
@@ -49,42 +46,66 @@
             </p>
             <p>
               But we are currently in the process switching from Signatures to Hashes. Which means not
-              all products may are already transitioned. Currently only MD5 hashes are supported.	  		  
-			</p>		  
-	      </div>
-		  
-		  <div id="datHashTab">
+              all products may are already transitioned. Currently only MD5 hashes are supported.          
+      </p>      
+        </div>
+      
+      <div id="datHashTab">
               <h2>Hash/Signature Generator</h2>
               <div><label>Customer Number</label> <input id="datCustomer" maxlength="7" onkeyup="de.dat.signature.app.updateHashes()"/></div>
               <div><label>User name</label> <input id="datUsername" onkeyup="de.dat.signature.app.updateHashes()"/></div>
               <div><label>Password</label> <input id="datPassword" type="password" onkeyup="de.dat.signature.app.updateHashes()"/></div>
               <br/>
-		    
-		      <h2>Permanent Hashes</h2>
-		      <p>Permanent Hashes are valid at any time, they do not expire</p>
-		      <div id="datSha256Key"></div>
-		      <div id="datMd5Key"></div>
-		  
-		  </div>
-		  
-		  <div id="datExpiringHashTab">
-		    <h2>Expirning Hashes</h2>
-		    <p>Expirning Hashes are only valid within a fixed interval/window. They are a permanent hash which is extended by a exprining time window</p>
-		    <p>The base for such an expiring window is a GMT Timestamp in Epoch. But instead
-		       of miliseconds we use a 10 minute aligment. This means if the timestamp is e.g. 1433766110060 
-		       the corresponding frame would be 2389610.
-		    <p>
-		    <div><label>Timeframe</label> <input id="datTimeframe" onkeyup="de.dat.signature.app.updateHashes()"/><button onClick="de.dat.signature.app.updateTimeStamp()">Update</button></div>
-		    <p>Append such a frame to your signature before calculating the checksum. This ensures you key will be only valid in the very same 
-		       frame, the previous one as well as the next one. Which means the timestpan is at worst case 10 Minutes and at best case 30 Minute.
-		    </p>
-		    <div id="datSha256TimedKey"></div>
-		    <div id="datMd5TimedKey"></div>				  
-		  </div>
-	    </div>		
-		                <div class="datFooter">
+        
+          <h2>Permanent Hashes</h2>
+          <p>Permanent Hashes are valid at any time, they do not expire</p>
+          <div><label>SHA-256</label> <input id="datSha256Key" size="64" readonly /></div>
+          <div><label>MD5</label> <input id="datMd5Key" size="32" readonly /></div>
+      
+      </div> 
+      
+      <div id="datExpiringHashTab">
+        <h2>Expirning Hashes</h2>
+        <p>Expirning Hashes are only valid within a fixed interval/window. They are a permanent hash which is extended by a exprining time window</p>
+        <p>The base for such an expiring window is a GMT Timestamp in Epoch. But instead
+           of miliseconds we use a 10 minute aligment. This means if the timestamp is e.g. 1433766110060 
+           the corresponding frame would be 2389610.
+        <p>
+        <div><label>Timeframe</label> <input id="datTimeframe" onkeyup="de.dat.signature.app.updateHashes()"/><button onClick="de.dat.signature.app.updateTimeStamp()">Now</button></div>
+        <p>Append such a frame to your signature before calculating the checksum. This ensures you key will be only valid in the very same 
+           frame, the previous one as well as the next one. Which means the timestpan is at worst case 10 Minutes and at best case 30 Minute.
+        </p>
+        <div><label>SHA-256</label> <input id="datSha256TimedKey" size="64" readonly /></div>
+        <div><label>MD5</label> <input id="datMd5TimedKey" size="32" readonly /></div>               
+      </div>
+      
+       <div id="datExamplesTab">
+        <h2>Java Example</h2>
+        <p>Illustrates how to calculate a SHA256 checksum from Java</p>
+        <textarea class="datExampleBox">
+  public String getHash( String str ) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+
+    byte[] bytesOfMessage = str.getBytes( "UTF-8" );
+
+    // instead of SHA-256 you can also use MD5
+    MessageDigest md = MessageDigest.getInstance( "SHA-256" );
+    byte[] mdbytes = md.digest( bytesOfMessage );
+
+    StringBuilder sb = new StringBuilder();
+    for ( byte ch : mdbytes ) {
+      sb.append( Integer.toString( (ch & 0xff) + 0x100, 16 ).substring( 1 ) );
+    }
+
+    return sb.toString().toUpperCase();
+  }        
+        </textarea>
+      </div>
+
+      </div>    
+      
+                  <!--  <div class="datFooter">
                     <button onclick="de.dat.external.utils.hideDialogs()">Close</button>
-                </div>
+                </div>-->
       </div>
     </div>      
   </body>
