@@ -584,10 +584,10 @@
 					
 					<div id="datSoapRequestTab" >
                         <h2>SOAP Request</h2>
-                        <p>
-                            Sends a raw SoapRequest via HTTP to the Server. Authentication headers are added automatically.
-                            It's just for demonstration. As it ignores the WSDL Schema you should not use it in productive code.
-                        </p>
+                        <p>Sends a raw SoapRequest via HTTP to the Server. Authentication headers are added automatically.</p>
+                        <p><b>It's just for demonstration and testing. You should not use it in productive code, as it ignores the WSDL Schema and 
+                              it would expose your interface partner signature. The Soap call should be implemented server side in programming language 
+                              which offers a SOAP Library.</b></p>
                         <div>
 						    <button onclick="de.dat.external.helper.sendSoap()">Send Request</button>
 							
