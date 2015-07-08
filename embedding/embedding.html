@@ -140,7 +140,7 @@
 
             <h2>Application Integration</h2>
             <p>
-                <button onclick="de.dat.external.utils.showDialog('datProductDialog')">Application...</button>
+                <button onclick="de.dat.external.utils.showDialog('datProductDialog', de.dat.external.helper.updateHost())">Application...</button>
             </p>
             <p>
                 <button onclick="de.dat.external.utils.showDialog('datAuthenticationDialog')">Authentication...</button>
@@ -337,11 +337,11 @@
                             In gerneral it's a proxy authentication, which allows you to calculate in behalf of a customer.
                         </p>
                         <div>
-                            <label>Signature</label>
-                            <input id="datPartnerCustomer"/>
+                            <label>Partner Number</label>
+                            <input id="datPartnerCustomer" maxlength="7"/>
                         </div>
                         <div>
-                            <label>Number</label>
+                            <label>Signature</label>
                             <input id="datPartnerSignature"/>
                         </div>
                     </div>
@@ -576,8 +576,8 @@
             <div class="datDialog" id="datSoapUrlDialog">
 			    <div class="datTabHeader">
                     <ul>
-                        <li id="datSoapUrlsHeader" class="datTabSelected" onclick="de.dat.external.utils.showTab('datSoapUrls')">SOAP Request</li>
-                        <li id="datSoapRequestHeader" onclick="de.dat.external.utils.showTab('datSoapRequest')">SOAP Url</li>
+                        <li id="datSoapUrlsHeader" class="datTabSelected" onclick="de.dat.external.utils.showTab('datSoapUrls')">SOAP Url</li>
+                        <li id="datSoapRequestHeader" onclick="de.dat.external.utils.showTab('datSoapRequest')">SOAP Tester</li>
                     </ul>
                 </div>
                 <div class="datTabContent">

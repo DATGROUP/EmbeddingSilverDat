@@ -34,7 +34,7 @@ if (!de.dat.external.webservice)
       throw new Error("Can not create the object XMLHttpRequest for the browser");
   };
 	
-  WebServiceClient.prototype.sendSoap = function(message, callback, headers) {
+  WebServiceClient.prototype.sendSoap = function(url, message, callback, headers) {
 	
     var request = this.createRequest();
 	
@@ -52,8 +52,6 @@ if (!de.dat.external.webservice)
       alert( 'XML request error: ' + request.statusText + ' (' + request.status + ')' ) ;		
 	  callback(request.responseText)
 	}
-	
-	var url = "http://datws153:8081/VehicleRepairOnline/services/VehicleRepairService";
 	
 	request.open('POST', url, true);
     //request.setRequestHeader('Content-Type', 'application/xml');
