@@ -25,9 +25,26 @@ if (!de.dat.external.helper)
       utils.setStringProperty("datCodeGen","");
       utils.hide("datCodeGen");
     },
+    
+    openHost : function() {
+      var utils = this.getUtils();
+      
+      var login = utils.getStringProperty("datUsername");
+      var signature = utils.getStringProperty("datSignature"); 
+      var customer = utils.getStringProperty("datCustomer");    
+      
+      var url = utils.getStringProperty("datHost")+"/eventList/eventList.html";
+      
+      if (!login && !signature && !customer)
+        alert("Could not authenticate via signature, check your credentials login, customer number and signature.");
+      
+      url+="?signature="+signature+"&customerNumber="+customer+"&login="+login;
+      
+      window.open(url,'_blank');
+    },
   
     updateHost : function() {
-        var utils = this.getUtils();
+      var utils = this.getUtils();
     
       var protocol = utils.getStringPropertyByName("datProtocol");
       var product = utils.getStringPropertyByName("datProduct");
