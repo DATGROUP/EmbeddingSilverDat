@@ -78,8 +78,13 @@ var SphinxClass = ( function(){
 		  if (pathname[0] != "/")
 		    pathname = "/"+pathname;
 		
-		  document.cookie = "JSESSIONID=;expires=Thu, 01 Jan 1970 00:00:00 GMT;domain="+parser.hostname+";path="+pathname+";";
-	      document.cookie = "JSESSIONID=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path="+pathname+";";		  
+		  try{
+			document.cookie = "JSESSIONID=;expires=Thu, 01 Jan 1970 00:00:00 GMT;domain="+parser.hostname+";path="+pathname+";";
+		  }catch(err){}
+
+		  try{
+			document.cookie = "JSESSIONID=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path="+pathname+";";
+		  }catch(err){}
 	    }		
 		
 		/** the init method */
